@@ -13,4 +13,4 @@ Launch with notifications in telegram
 `curl -s https://raw.githubusercontent.com/c29r3/mina-utils/main/node-restarter.sh | bash -s -- <TG_TOKEN> <TG_CHAT_ID>`
 
 Add it to cron `crontab -e`:  
-`*/10 * * * * curl -s https://raw.githubusercontent.com/c29r3/mina-utils/main/node-restarter.sh | bash`
+`crontab -l | { cat; echo "*/10 * * * * curl -s https://raw.githubusercontent.com/c29r3/mina-utils/main/node-restarter.sh | bash"; } | crontab -`
