@@ -35,7 +35,7 @@ if [[ $(bc -l <<< "${EXPLORER_HEIGTH} - ${LOCAL_HEIGHT}") -gt ${SYNC_WINDOW} ]] 
     echo -e ${RED}"ALARM! ${CONTAINER_NAME} node on ${HOSTNAME} is out of sync"${NORMAL}
     MSG=$(echo -e "${CONTAINER_NAME} node on ${HOSTNAME} is out of sync\nLocal/Explorer: ${LOCAL_HEIGHT}\\${EXPLORER_HEIGTH}\nUptime: ${UPTIME} | Status: ${SYNC_STATUS}")
     
-    if [[ $TG_TOKEN != "" ]]
+    if [[ ${TG_TOKEN} != "" ]]
       then
         curl -s -H 'Content-Type: application/json' --request 'POST' -d "{\"chat_id\":\"${TG_CHAT_ID}\",\"text\":\"${MSG}\"}" "https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
     fi
