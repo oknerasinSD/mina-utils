@@ -33,7 +33,7 @@ echo -e "Uptime: ${UPTIME} | Status: ${SYNC_STATUS}"
 if [[ $(bc -l <<< "${EXPLORER_HEIGTH} - ${LOCAL_HEIGHT}") -gt ${SYNC_WINDOW} ]] && [[ ${UPTIME} -gt ${MIN_UPTIME} ]]
   then
     echo -e ${RED}"ALARM! ${CONTAINER_NAME} node on ${HOSTNAME} is out of sync"${NORMAL}
-    MSG=$(echo -e "${CONTAINER_NAME} node on ${HOSTNAME} is out of sync\nLocal/Explorer: ${LOCAL_HEIGHT}\\${EXPLORER_HEIGTH}\nUptime: ${UPTIME} | Status: ${SYNC_STATUS}")
+    MSG=$(echo -e "${CONTAINER_NAME} node on ${HOSTNAME} is out of sync\nLocal/Explorer: ${LOCAL_HEIGHT}/${EXPLORER_HEIGTH}\nUptime: ${UPTIME} | Status: ${SYNC_STATUS}")
     
     if [[ ${TG_TOKEN} != "" ]]
       then
