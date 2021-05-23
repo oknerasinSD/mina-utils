@@ -42,6 +42,4 @@ if [[ $(bc -l <<< "${EXPLORER_HEIGTH} - ${LOCAL_HEIGHT}") -gt ${SYNC_WINDOW} ]] 
     
     # restart container
     docker restart ${CONTAINER_NAME}
-else
-  echo -e ${GREEN}"Node is synced: ${SYNC_STATUS}"${NORMAL}
 fi
