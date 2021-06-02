@@ -2,7 +2,7 @@
 
 SYNC_WINDOW=3
 # 2700 sec = 45 min
-MIN_UPTIME=2700
+MIN_UPTIME=3000
 # telegram bot token
 TG_TOKEN=$1
 # telegram user ID
