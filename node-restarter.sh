@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SYNC_WINDOW=5
+SYNC_WINDOW=3
 # 2700 sec = 45 min
 MIN_UPTIME=2700
 # telegram bot token
