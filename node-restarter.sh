@@ -1,5 +1,7 @@
 #!/bin/bash
 
+LOG_PERIOD_MIN=25
+LOG_NAME="mina_log.txt"
 SYNC_WINDOW=3
 # 2700 sec = 45 min
 MIN_UPTIME=3000
@@ -35,13 +37,18 @@ echo -e "Uptime: ${UPTIME} | Status: ${SYNC_STATUS}"
 if [[ $(bc -l <<< "${MAX_UNVALIDATED_BLOCK} - ${LOCAL_HEIGHT}") -gt ${SYNC_WINDOW} ]] && [[ ${UPTIME} -gt ${MIN_UPTIME} ]]
   then
     echo -e ${RED}"ALARM! ${CONTAINER_NAME} node on ${HOSTNAME} is out of sync"${NORMAL}
-    MSG=$(echo -e "${CONTAINER_NAME} node on ${HOSTNAME} is out of sync\nLocal/Explorer: ${LOCAL_HEIGHT}/${MAX_UNVALIDATED_BLOCK}\nUptime: ${UPTIME} | Status: ${SYNC_STATUS}")
+    MSG=$(echo -e "${date -u} ${CONTAINER_NAME} node on ${HOSTNAME} is out of sync\nLocal/Explorer: ${LOCAL_HEIGHT}/${MAX_UNVALIDATED_BLOCK}\nUptime: ${UPTIME} | Status: ${SYNC_STATUS}")
+    # export logs
+    docker logs ${CONTAINER_NAME} --since "${LOG_PERIOD_MIN}m" > ${LOG_NAME}
     
     if [[ ${TG_TOKEN} != "" ]]
       then
         curl -s -H 'Content-Type: application/json' --request 'POST' -d "{\"chat_id\":\"${TG_CHAT_ID}\",\"text\":\"${MSG}\"}" "https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
+        # send log file
+        curl -F document=@"${LOG_NAME}" https://api.telegram.org/bot${TG_TOKEN}/sendDocument?chat_id=${TG_CHAT_ID}
     fi
     
     # restart container
     docker restart ${CONTAINER_NAME}
+    
 fi
