@@ -31,7 +31,7 @@ SYNC_STATUS=$(jq .sync_status <<< $STATUS_DATA)
 
 echo -e "\n-------------------------"
 echo -e $(date)
-echo -e "Local/Explorer: ${LOCAL_HEIGHT}\\${MAX_UNVALIDATED_BLOCK}"       
+echo -e "LOCAL_HEIGHT/MAX_UNVALIDATED_HEIGHT: ${LOCAL_HEIGHT}\\${MAX_UNVALIDATED_BLOCK}"       
 echo -e "Uptime: ${UPTIME} | Status: ${SYNC_STATUS}"   
 
 if [[ $(bc -l <<< "${MAX_UNVALIDATED_BLOCK} - ${LOCAL_HEIGHT}") -gt ${SYNC_WINDOW} ]] && [[ ${UPTIME} -gt ${MIN_UPTIME} ]]
