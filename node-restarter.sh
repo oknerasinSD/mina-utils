@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_PERIOD_MIN=25
+LOG_PERIOD_MIN=40
 LOG_NAME="mina_log.txt"
 SYNC_WINDOW=3
 # 2700 sec = 45 min
