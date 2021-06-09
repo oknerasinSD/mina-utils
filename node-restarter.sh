@@ -58,13 +58,6 @@ if [[ $(bc -l <<< "${MAX_UNVALIDATED_BLOCK} - ${LOCAL_HEIGHT}") -gt ${SYNC_WINDO
   send_file ${LOG_NAME}
   # restart container
   docker restart ${CONTAINER_NAME}
-    
-elif [[ ${SYNC_STATUS} != "Synced" ]] && [[ ${UPTIME} -gt ${MIN_UPTIME} ]]; then
-  echo -e ${RED}"$(date -u) ALARM! ${CONTAINER_NAME} node status on ${HOSTNAME} is not synced: ${SYNC_STATUS}"${NORMAL}
-  MSG=$(echo -e "$(date -u) ${CONTAINER_NAME} node status on ${HOSTNAME} is not synced: ${SYNC_STATUS}")
-  docker exec ${CONTAINER_NAME} mina client status > status.txt
-  send_message ${MSG}
-  send_file "status.txt"
 
 elif [[ $(bc -l <<< "${MAX_UNVALIDATED_BLOCK} - ${EXPLORER_HEIGTH}") -gt ${SYNC_WINDOW} ]] && [[ ${UPTIME} -gt ${MIN_UPTIME} ]]; then
   echo -e ${RED}"$(date -u) ALARM! ${CONTAINER_NAME} ${HOSTNAME} EXPLORER_HEIGHT: ${EXPLORER_HEIGTH}\nLOCAL_HEIGHT: ${LOCAL_HEIGHT}"${NORMAL}
