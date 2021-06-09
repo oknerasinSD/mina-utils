@@ -49,8 +49,8 @@ echo -e "LOCAL_HEIGHT/MAX_UNVALIDATED_HEIGHT: ${LOCAL_HEIGHT}\\${MAX_UNVALIDATED
 echo -e "Uptime: ${UPTIME} | Status: ${SYNC_STATUS}"   
 
 if [[ $(bc -l <<< "${MAX_UNVALIDATED_BLOCK} - ${LOCAL_HEIGHT}") -gt ${SYNC_WINDOW} ]] && [[ ${UPTIME} -gt ${MIN_UPTIME} ]]; then
-  echo -e ${RED}"${date -u} ALARM! ${CONTAINER_NAME} node on ${HOSTNAME} is out of sync"${NORMAL}
-  MSG=$(echo -e "${date -u} ${CONTAINER_NAME} node on ${HOSTNAME} LOCAL_HEIGHT: ${LOCAL_HEIGHT}\nMAX_UNVALIDATED_BLOCK: ${MAX_UNVALIDATED_BLOCK}")
+  echo -e ${RED}"$(date -u) ALARM! ${CONTAINER_NAME} node on ${HOSTNAME} is out of sync"${NORMAL}
+  MSG=$(echo -e "$(date -u) ${CONTAINER_NAME} node on ${HOSTNAME} LOCAL_HEIGHT: ${LOCAL_HEIGHT}\nMAX_UNVALIDATED_BLOCK: ${MAX_UNVALIDATED_BLOCK}")
   # export logs
   docker logs ${CONTAINER_NAME} --since "${LOG_PERIOD_MIN}m" > ${LOG_NAME}
   send_message ${MSG}
@@ -60,14 +60,14 @@ if [[ $(bc -l <<< "${MAX_UNVALIDATED_BLOCK} - ${LOCAL_HEIGHT}") -gt ${SYNC_WINDO
   docker restart ${CONTAINER_NAME}
     
 elif [[ ${SYNC_STATUS} != "Synced" ]] && [[ ${UPTIME} -gt ${MIN_UPTIME} ]]; then
-  echo -e ${RED}"${date -u} ALARM! ${CONTAINER_NAME} node status on ${HOSTNAME} is not synced: ${SYNC_STATUS}"${NORMAL}
-  MSG=$(echo -e "${date -u} ${CONTAINER_NAME} node status on ${HOSTNAME} is not synced: ${SYNC_STATUS}")
+  echo -e ${RED}"$(date -u} ALARM! ${CONTAINER_NAME} node status on ${HOSTNAME} is not synced: ${SYNC_STATUS}"${NORMAL}
+  MSG=$(echo -e "$(date -u) ${CONTAINER_NAME} node status on ${HOSTNAME} is not synced: ${SYNC_STATUS}")
   docker exec ${CONTAINER_NAME} mina client status > status.txt
   send_message ${MSG}
   send_file "status.txt"
 
 elif [[ $(bc -l <<< "${MAX_UNVALIDATED_BLOCK} - ${EXPLORER_HEIGTH}") -gt ${SYNC_WINDOW} ]] && [[ ${UPTIME} -gt ${MIN_UPTIME} ]]; then
-  echo -e ${RED}"${date -u} ALARM! ${CONTAINER_NAME} ${HOSTNAME} EXPLORER_HEIGHT: ${EXPLORER_HEIGTH}\nLOCAL_HEIGHT: ${LOCAL_HEIGHT}"${NORMAL}
-  MSG=$(echo -e "${date -u} ${CONTAINER_NAME} ${HOSTNAME} EXPLORER_HEIGHT: ${EXPLORER_HEIGTH}\nLOCAL_HEIGHT: ${LOCAL_HEIGHT}")
+  echo -e ${RED}"$(date -u) ALARM! ${CONTAINER_NAME} ${HOSTNAME} EXPLORER_HEIGHT: ${EXPLORER_HEIGTH}\nLOCAL_HEIGHT: ${LOCAL_HEIGHT}"${NORMAL}
+  MSG=$(echo -e "$(date -u) ${CONTAINER_NAME} ${HOSTNAME} EXPLORER_HEIGHT: ${EXPLORER_HEIGTH}\nLOCAL_HEIGHT: ${LOCAL_HEIGHT}")
   send_message $MSG
 fi
