@@ -20,7 +20,7 @@ NORMAL="\e[39m"
 
 
 #EXPLORER_HEIGTH=$(curl -s https://api.minaexplorer.com/summary | jq -r .blockchainLength)
-STATUS_DATA=$(docker exec mina_daemon_1 mina client status --json | grep -v "Using password from")
+STATUS_DATA=$(docker exec mina mina client status --json | grep -v "Using password from")
 MAX_UNVALIDATED_BLOCK=$(jq .highest_unvalidated_block_length_received <<< $STATUS_DATA)
 LOCAL_HEIGHT=$(jq .blockchain_length <<< $STATUS_DATA)
 UPTIME=$(jq .uptime_secs <<< $STATUS_DATA)
