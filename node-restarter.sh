@@ -10,7 +10,7 @@ TG_CHAT_ID=$2
 CONTAINER_NAME=$3
 if [[ ${CONTAINER_NAME} == "" ]]
   then
-    CONTAINER_NAME="mina_daemon_1"
+    CONTAINER_NAME="mina"
 fi
 
 
